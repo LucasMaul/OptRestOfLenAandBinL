@@ -19,8 +19,8 @@ This class aims to find the optimal integer solutions for `x` and `y` that minim
 To install the `MinimiseError` class, you can clone this repository from GitHub:
 
 ```bash
-git clone https://github.com/yourusername/MinimiseError.git
-cd MinimiseError
+git clone https://github.com/LuMaul/OptRestOfLenAandBinL
+cd OptRestOfLenAandBinL
 ```
 
 There are no additional dependencies required beyond Python 3.x, so you can start using the class immediately after cloning the repository.
