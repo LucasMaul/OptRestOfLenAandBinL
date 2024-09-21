@@ -1,178 +1,149 @@
+
+
 class MinimiseError:
-    def __init__(self, L, a, b) -> None:
+    """
+    A class to minimize the error in a linear equation of the form `L = a*x + b*y` 
+    by finding integer values of `x` and `y` that yield the closest approximation.
+
+    The goal is to minimize the error (or residual) `L - (a*x + b*y)` by adjusting `x` 
+    within a valid range and calculating the corresponding integer `y` values.
+
+    Attributes:
+    -----------
+    _L : float
+        The target length `L` that we aim to approximate using the linear equation.
+    _a : float
+        The coefficient for the variable `x`.
+    _b : float
+        The coefficient for the variable `y`.
+    _show_residuals : bool
+        Whether or not to display the residual errors for all computed `x` values.
+
+    Methods:
+    --------
+    _getValidXRange() -> list[int]:
+        Computes the valid range of integer `x` values based on the equation constraints.
+
+    _y(x: float) -> float:
+        Computes the corresponding `y` value (float) for a given `x` in the equation.
+
+    _max_y_int(y: float) -> int:
+        Returns the largest integer less than or equal to the computed `y` value.
+
+    _errorPlane(x: float | int, y: float | int) -> float:
+        Calculates the error or residual `L - (a*x + b*y)` for given values of `x` and `y`.
+
+    _getError(x_int: float) -> float:
+        Computes the error for a given integer `x` and its corresponding integer `y`.
+
+    _mapErrorsToX(x_range: list[float]) -> dict[float, int]:
+        Maps computed errors to their respective `x` values for a given range of `x`.
+
+    _extractMinError(x_error_map: dict) -> dict:
+        Finds the `x` value that corresponds to the smallest error.
+
+    _printResiduals(errors: dict) -> None:
+        Displays the residual errors for all computed `x` values if requested.
+
+    _printResult(x_sol: int, y_sol: int, len_resi: int) -> None:
+        Prints the optimized solution showing `x` and `y` values, their coefficients,
+        and the final computed result with minimal error.
+
+    _solve() -> tuple:
+        Executes the minimization process by calculating valid `x` values, corresponding
+        errors, and finding the optimal solution with minimal error. Returns the solution
+        `(x_sol, y_sol, errors)`.
+
+    _main() -> None:
+        Initializes the minimization process and stores the solution as class attributes.
+
+    Example:
+    --------
+    ```python
+    if __name__ == '__main__':
+        myOpt = MinimiseError(L=10.5, a=0.80, b=1.25, show_residuals=False)
+    ```
+    This will minimize the error for the equation `10.5 = 0.8*x + 1.25*y` and print 
+    the optimized integer values of `x` and `y` with the smallest residual error.
+    """
+
+    def __init__(self, L, a, b, show_residuals: bool = False) -> None:
         """
-        A class to find an optimal integer solution to the equation:
+        Initializes the MinimiseError class with the target length `L`, coefficients `a`
+        and `b`, and an option to show residuals.
 
-            L = a * x + b * y + E
-
-        where:
-            - L is a given constant (the target value),
-            - a and b are floating-point coefficients,
-            - x and y are non-negative integers,
-            - E is the error term that we aim to minimize.
-        
-        The goal of this class is to find the values of x and y that minimize the error E, 
-        effectively making L as close as possible to a * x + b * y.
-
-        Attributes:
+        Parameters:
         -----------
-        _L : float
-            The target value for the equation.
-        _a : float
-            Coefficient of the x variable (floating-point).
-        _b : float
-            Coefficient of the y variable (floating-point).
-        x_sol : int
-            The optimized integer solution for x.
-        y_sol : int
-            The optimized integer solution for y.
-        
-        Methods:
-        --------
-        __init__(L: float, a: float, b: float) -> None:
-            Initializes the optimizer with the given constants L, a, and b, and immediately 
-            solves the equation to find the optimal values of x and y.
-        
-        _getYRange() -> list[int]:
-            Computes and returns the valid range of y values by ensuring the equation remains 
-            within non-negative integers.
-        
-        _x(y: float) -> float:
-            Computes the x value corresponding to a given y using the equation L = a * x + b * y.
-        
-        _y(x: float) -> float:
-            Computes the y value corresponding to a given x using the equation L = a * x + b * y.
-        
-        _x_residual(y: float) -> float:
-            Computes the fractional (residual) part of x for a given y.
-        
-        _y_residual(x: float) -> float:
-            Computes the fractional (residual) part of y for a given x.
-        
-        _dist_d(x_res: float, y_res: float) -> float:
-            Computes the shortest distance between the residuals of x and y, representing the 
-            "error" in the approximation of the solution.
-        
-        _getDistance(y: int) -> float:
-            For a given y, calculates the residual error based on the corresponding x and y values.
-        
-        _plane_eq(x: float, y: float) -> float:
-            Computes the error term E using the plane equation:
-
-                E = L - (a * x + b * y)
-        
-        _mapDistancesToY(y_range: list[int]) -> list[float, complex]:
-            Maps the residual distances for a given y range.
-        
-        _mapRealDistances(y_range: list[int], distances: list[float, complex]) -> dict:
-            Filters and returns only the real distances from the calculated residual distances.
-        
-        solve() -> tuple[int, int]:
-            Iterates through possible y values to minimize the error E and returns the optimal 
-            integer values of x and y that solve the equation with the smallest error.
-        
-        _main() -> None:
-            Calls the solver to find the optimized solution and stores the results (x_sol, y_sol) 
-            as attributes.
-
-        Example:
-        --------
-        To use this optimizer, instantiate it with specific values for L, a, and b:
-
-            myOpt = MinimiseError(L=153540.405, a=0.83, b=1.25)
-
-        This will immediately solve the equation and store the optimized values of x and y in 
-        the instance's `x_sol` and `y_sol` attributes.
+        L : float
+            The target value for the equation `L = a*x + b*y`.
+        a : float
+            Coefficient for `x` in the equation.
+        b : float
+            Coefficient for `y` in the equation.
+        show_residuals : bool, optional
+            Whether to print the residuals (default is False).
         """
         self._L = L
         self._a = a
         self._b = b
+        self._show_residuals = show_residuals
 
         self._main()
 
 
-
-    def _getYRange(self) -> list[int]:
-        rational_Y = (self._L / self._b)
-        max_Y = int(rational_Y - rational_Y%1)
-        return list(range(int(max_Y)+1)) # +1 -> range omits last int
+    def _getValidXRange(self) -> list[int]:
+        rational_X = (self._L / self._a)
+        max_X = int(rational_X - rational_X%1)
+        return list(range(int(max_X)+1)) # +1 -> range omits last int
     
 
-    def _x(self, y:float) -> float:
-        return (self._L - self._b * y) / self._a
-    
     def _y(self, x:float) -> float:
         return (self._L - self._a * x) / self._b
 
-    def _x_residual(self, y:float) -> float:
-        return self._x(y)%1
+    def _max_y_int(self, y:float) -> int:
+        return y - y%1
     
-    def _y_residual(self, x:float) -> float:
-        return self._y(x)%1
+    def _errorPlane(self, x:float|int, y:float|int) -> float:
+        return self._L - self._a*x - self._b*y
 
 
-    def _dist_d(self, x_res:float, y_res:float) -> float:
-        r_x, r_y = x_res, y_res
-        if x_res == y_res and x_res == 0:
-            return 0
-        
-        d = ( # shortest distance to line in x-y Plane with L = 0
-            (
-            -r_x**(8)
-            -2*r_x**(6)*(2*r_y**(2)-1)
-            -r_x**(4)*(6*r_y**(4)-6*r_y**(2)+1)
-            -2*r_x**(2)*r_y**(2)*(2*r_y**(4)-3*r_y**(2)-1)
-            -r_y**(4)*(r_y**(4)-2*r_y**(2)+1)
-            )**(1/2)
-            /(2*(r_x**(2)+r_y**(2)))
+    def _getError(self, x_int:float) -> float:
+        y_int = self._max_y_int(self._y(x_int))
+        error = self._errorPlane(x_int, y_int)
+        return error
+
+
+    def _mapErrorsToX(self, x_range:list[float]) -> dict[float, int]:
+        errors = list(map(self._getError, x_range))
+        x_error_map = dict(zip(errors, x_range))
+        return x_error_map
+
+
+    def _extractMinError(self, x_error_map:dict) -> dict:
+        min_error = min(x_error_map)
+        return x_error_map[min_error]
+
+
+    def _printResiduals(self, errors:dict) -> None:
+
+        print(
+            "=========================\n"
+            f"'error:x_int_value' dict\n"
+            "=========================\n"
+            f"\n{errors}\n"
             )
-        
-        return d
-    
-
-    def _getDistance(self, y:int) -> float:
-        x_res = self._x_residual(y)
-        x = self._x(y)-self._x(y)%1
-        y_res = self._y_residual(x)
-        d = self._dist_d(x_res, y_res)
-        return d 
 
 
-    def _plane_eq(self, x:float, y:float) -> float:
-        return self._L - self._a*x -self._b*y
-    
+    def _printResult(self, x_sol:int, y_sol:int, len_resi:int) -> None:
 
-    def _mapDistancesToY(self, y_range:list[int]) -> list[float, complex]:
-        distances = list(map(self._getDistance, y_range))
-        return distances
+        result_len = self._a * x_sol + self._b * y_sol
 
+        result_string = (
+            f"{x_sol} * [{self._a:0.3f}] + "
+            f"{y_sol} * [{self._b:0.3f}] = {result_len:0.3f}"
+        )
 
-    def _mapRealDistances(
-            self,
-            y_range:list[int],
-            distances:list[float, complex]
-            ) -> dict:
-        
-        real_distances_for_y = {}
-        for index, y in enumerate(y_range):
-            dist = distances[index]
-            if isinstance(dist, float):
-                real_distances_for_y[dist] = y
-
-        return real_distances_for_y
-
-
-    def solve(self) -> tuple:
-
-        y_range = self._getYRange()
-        distances = self._mapDistancesToY(y_range)
-        real_distances = self._mapRealDistances(y_range, distances)
-        min_dist = min(real_distances)
-
-        y_sol = real_distances[min_dist]
-        x_sol = int(self._x(y_sol) - self._x(y_sol)%1)
-
-        result_len = x_sol * self._a + y_sol * self._b
+        horizonal_bar_above_result = "="*len(result_string)
 
         print(
             "==================\n"
@@ -181,20 +152,33 @@ class MinimiseError:
             f"l = {self._L:0.3f}\n"
             f"a = {self._a:0.3f}\n"
             f"b = {self._b:0.3f}\n"
-            "==========================================\n"
-            f"{x_sol} x {self._a:0.3f} + "
-            f"{y_sol} x {self._b:0.3f} = {result_len:0.3f}\n"
-            F"> minmal rest: {self._plane_eq(x_sol, y_sol):0.3f}\n"
-            f"> checked {len(real_distances)} residuals"
+            f"{horizonal_bar_above_result}\n"
+            f"{result_string}\n"
+            F"> minmal rest: {self._errorPlane(x_sol, y_sol):0.3f}\n"
+            f"> got mininum out of {len_resi} residuals"
             )
 
-        return x_sol, y_sol
+
+    def _solve(self) -> tuple:
+
+        x_range = self._getValidXRange()
+        errors = self._mapErrorsToX(x_range)
+
+        x_sol = self._extractMinError(errors)
+        y_sol = self._max_y_int(self._y(x_sol))
+
+        if self._show_residuals:
+            self._printResiduals(errors)
+
+        self._printResult(x_sol, y_sol, len(errors))
+
+        return x_sol, y_sol, errors
 
 
     def _main(self) -> None:
-        self.x_sol, self.y_sol = self.solve()
+        self.x_sol, self.y_sol, self.residuals = self._solve()
 
 
 
 if __name__ == '__main__':
-    myOpt = MinimiseError(L=153540.405, a=0.83, b=1.25)
+    myOpt = MinimiseError(L=20.5, a=0.80, b=1.25, show_residuals=False)
