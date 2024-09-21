@@ -2,6 +2,30 @@
 
 `LinearEquationErrorMinimizer` is a Python class designed to minimize the error in a linear equation of the form `L = a*x + b*y` by finding integer values of `x` and `y` that yield the closest approximation.
 
+## Example Output
+
+When you run the optimizer with the parameters shown in the usage example, you'll get output similar to this:
+
+```
+==================
+optimized solution
+==================
+l = 20.500
+a = 0.800
+b = 1.250
+======================================
+10 * [0.800] + 10.0 * [1.250] = 20.500
+> minmal rest: 0.000
+> got mininum out of 25 residuals
+```
+
+This output shows:
+- The input parameters (`l`, `a`, `b`)
+- The optimized integer values for `x` (10) and `y` (10)
+- The resulting equation that perfectly matches the target `L` value
+- The minimal residual error (0.000 in this case)
+- The number of residuals checked to find this optimal solution
+
 ## Description
 
 This class aims to find the optimal integer solutions for `x` and `y` that minimize the residual error in the equation `L = a*x + b*y`. It's particularly useful in scenarios where you need to approximate a target value using two variables with specific coefficients, but require integer solutions.
@@ -44,30 +68,6 @@ This will minimize the error for the equation `20.5 = 0.8*x + 1.25*y` and print 
 - `a` (float): Coefficient for `x` in the equation
 - `b` (float): Coefficient for `y` in the equation
 - `show_residuals` (bool, optional): Whether to print the residuals (default is False)
-
-## Example Output
-
-When you run the optimizer with the parameters shown in the usage example, you'll get output similar to this:
-
-```
-==================
-optimized solution
-==================
-l = 20.500
-a = 0.800
-b = 1.250
-======================================
-10 * [0.800] + 10.0 * [1.250] = 20.500
-> minmal rest: 0.000
-> got mininum out of 25 residuals
-```
-
-This output shows:
-- The input parameters (`l`, `a`, `b`)
-- The optimized integer values for `x` (10) and `y` (10)
-- The resulting equation that perfectly matches the target `L` value
-- The minimal residual error (0.000 in this case)
-- The number of residuals checked to find this optimal solution
 
 
 ## Methods
