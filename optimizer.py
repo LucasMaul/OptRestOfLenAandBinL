@@ -132,10 +132,8 @@ class Linfit:
                 yield min_error, min_x
 
 
-    def _undercutMinError(self, error_generator:Generator) -> int:
-        min_error, x_sol = None, None
-        for error, x in error_generator:
-            min_error, x_sol = error, x
+    def _undercutMinError(self, error_generator: Generator) -> int:
+        min_error, x_sol = min(error_generator, key=lambda t: t[0])
         return x_sol
 
 
@@ -228,4 +226,4 @@ class Linfit:
 
 if __name__ == '__main__':
     myOpt = Linfit(a=0.80, b=1.25)
-    myOpt.solve(L=1061105.570)
+    myOpt.solve(L=1200321.123123)
