@@ -1,6 +1,6 @@
-# MinimiseError
+# LinearEquationErrorMinimizer
 
-`MinimiseError` is a Python class designed to minimize the error in a linear equation of the form `L = a*x + b*y` by finding integer values of `x` and `y` that yield the closest approximation.
+`LinearEquationErrorMinimizer` is a Python class designed to minimize the error in a linear equation of the form `L = a*x + b*y` by finding integer values of `x` and `y` that yield the closest approximation.
 
 ## Description
 
@@ -16,7 +16,7 @@ This class aims to find the optimal integer solutions for `x` and `y` that minim
 
 ## Installation
 
-To install the `MinimiseError` class, you can clone this repository from GitHub:
+To install the `LinearEquationErrorMinimizer` class, you can clone this repository from GitHub:
 
 ```bash
 git clone https://github.com/LuMaul/OptRestOfLenAandBinL
@@ -27,13 +27,13 @@ There are no additional dependencies required beyond Python 3.x, so you can star
 
 ## Usage
 
-Here's a basic example of how to use the `MinimiseError` class:
+Here's a basic example of how to use the `LinearEquationErrorMinimizer` class:
 
 ```python
-from minimise_error import MinimiseError
+from main import LinearEquationErrorMinimizer
 
 if __name__ == '__main__':
-    myOpt = MinimiseError(L=20.5, a=0.80, b=1.25, show_residuals=False)
+    myOpt = LinearEquationErrorMinimizer(L=20.5, a=0.80, b=1.25, show_residuals=False)
 ```
 
 This will minimize the error for the equation `20.5 = 0.8*x + 1.25*y` and print the optimized integer values of `x` and `y` with the smallest residual error.
