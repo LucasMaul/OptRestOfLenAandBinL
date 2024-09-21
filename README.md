@@ -53,7 +53,7 @@ myFit = Linfit(a=0.80, b=1.25)
 myFit.solve(L=20.5)
 ```
 
-This will minimize the error for the equation `20.5 = 0.8*x_i + 1.25*y_i` and print the optimized integer values of `x_i` and `y_i` with the smallest residual error.
+This will minimize the error for the equation `20.5 = 0.8*x_i + 1.25*y_i + e_i` and print the optimized integer values of `x_i` and `y_i` with the smallest residual error.
 
 
 ## Methods
