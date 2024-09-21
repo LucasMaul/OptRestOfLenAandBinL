@@ -10,13 +10,15 @@ When you run the optimizer with the parameters shown in the usage example, you'l
 ==================
 optimized solution
 ==================
-l = 20.500
-a = 0.800
-b = 1.250
-======================================
-10 * [0.800] + 10.0 * [1.250] = 20.500
-> minmal rest: 0.000
-> got mininum out of 25 residuals
+l = 1061105.570
+a = 1.250
+b = 0.800
+=============================================
+7 * [1.250] + 1326371 * [0.800] = 1061105.550
+=============================================
+> minimal error: 0.020
+> got minimum out of 848885 residuals
+> optimization took 0.2185959815979004 sec
 ```
 
 This output shows:
@@ -54,7 +56,7 @@ Here's a basic example of how to use the `LinearEquationIntegerOptimizer` class:
 from main import LinearEquationIntegerOptimizer
 
 if __name__ == '__main__':
-    myOpt = LinearEquationIntegerOptimizer(L=20.5, a=0.80, b=1.25, show_residuals=False)
+    myOpt = LinearEquationIntegerOptimizer(L=20.5, a=0.80, b=1.25)
 ```
 
 This will minimize the error for the equation `20.5 = 0.8*x + 1.25*y` and print the optimized integer values of `x` and `y` with the smallest residual error.

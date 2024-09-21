@@ -64,7 +64,7 @@ class LinearEquationIntegerOptimizer:
     and print the optimized integer values of `x` and `y` that yield the smallest error.
     """
 
-    def __init__(self, L, a, b, show_residuals: bool = False) -> None:
+    def __init__(self, L:float, a:float, b:float) -> None:
         """
         Initializes the LinearEquationIntegerOptimizer class with the target length `L`, coefficients `a`
         and `b`, and an option to show residuals.
@@ -82,7 +82,6 @@ class LinearEquationIntegerOptimizer:
         """
         self._L = L
         self._reduceResidualsInVarSwitching(a, b)
-        self._show_residuals = show_residuals
 
         self._main()
 
