@@ -45,13 +45,30 @@ This will minimize the error for the equation `20.5 = 0.8*x + 1.25*y` and print 
 - `b` (float): Coefficient for `y` in the equation
 - `show_residuals` (bool, optional): Whether to print the residuals (default is False)
 
-## Output
+## Example Output
 
-The class will print the optimized solution, showing:
-- The input parameters (`L`, `a`, `b`)
-- The calculated integer values for `x` and `y`
-- The resulting approximation of `L`
-- The minimal residual error
+When you run the optimizer with the parameters shown in the usage example, you'll get output similar to this:
+
+```
+==================
+optimized solution
+==================
+l = 20.500
+a = 0.800
+b = 1.250
+======================================
+10 * [0.800] + 10.0 * [1.250] = 20.500
+> minmal rest: 0.000
+> got mininum out of 25 residuals
+```
+
+This output shows:
+- The input parameters (`l`, `a`, `b`)
+- The optimized integer values for `x` (10) and `y` (10)
+- The resulting equation that perfectly matches the target `L` value
+- The minimal residual error (0.000 in this case)
+- The number of residuals checked to find this optimal solution
+
 
 ## Methods
 
