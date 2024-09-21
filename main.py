@@ -1,6 +1,6 @@
 
 
-class LinearEquationErrorMinimizer:
+class LinearEquationIntegerOptimizer:
     """
     A class to minimize the error in a linear equation of the form `L = a*x + b*y` 
     by finding integer values of `x` and `y` that yield the closest approximation.
@@ -61,7 +61,7 @@ class LinearEquationErrorMinimizer:
     --------
     ```python
     if __name__ == '__main__':
-        myOpt = LinearEquationErrorMinimizer(L=10.5, a=0.80, b=1.25, show_residuals=False)
+        myOpt = LinearEquationIntegerOptimizer(L=10.5, a=0.80, b=1.25, show_residuals=False)
     ```
     This will minimize the error for the equation `10.5 = 0.8*x + 1.25*y` and print 
     the optimized integer values of `x` and `y` with the smallest residual error.
@@ -69,7 +69,7 @@ class LinearEquationErrorMinimizer:
 
     def __init__(self, L, a, b, show_residuals: bool = False) -> None:
         """
-        Initializes the LinearEquationErrorMinimizer class with the target length `L`, coefficients `a`
+        Initializes the LinearEquationIntegerOptimizer class with the target length `L`, coefficients `a`
         and `b`, and an option to show residuals.
 
         Parameters:
@@ -181,4 +181,4 @@ class LinearEquationErrorMinimizer:
 
 
 if __name__ == '__main__':
-    myOpt = LinearEquationErrorMinimizer(L=20.5, a=0.80, b=1.25, show_residuals=False)
+    myOpt = LinearEquationIntegerOptimizer(L=20.5, a=0.80, b=1.25, show_residuals=False)

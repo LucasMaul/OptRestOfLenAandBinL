@@ -1,6 +1,6 @@
-# LinearEquationErrorMinimizer
+# LinearEquationIntegerOptimizer
 
-`LinearEquationErrorMinimizer` is a Python class designed to minimize the error in a linear equation of the form `L = a*x + b*y` by finding integer values of `x` and `y` that yield the closest approximation.
+`LinearEquationIntegerOptimizer` is a Python class designed to minimize the error in a linear equation of the form `L = a*x + b*y` by finding integer values of `x` and `y` that yield the closest approximation.
 
 ## Example Output
 
@@ -26,9 +26,6 @@ This output shows:
 - The minimal residual error (0.000 in this case)
 - The number of residuals checked to find this optimal solution
 
-## Description
-
-This class aims to find the optimal integer solutions for `x` and `y` that minimize the residual error in the equation `L = a*x + b*y`. It's particularly useful in scenarios where you need to approximate a target value using two variables with specific coefficients, but require integer solutions.
 
 ## Features
 
@@ -40,7 +37,7 @@ This class aims to find the optimal integer solutions for `x` and `y` that minim
 
 ## Installation
 
-To install the `LinearEquationErrorMinimizer` class, you can clone this repository from GitHub:
+To install the `LinearEquationIntegerOptimizer` class, you can clone this repository from GitHub:
 
 ```bash
 git clone https://github.com/LuMaul/OptRestOfLenAandBinL
@@ -51,23 +48,16 @@ There are no additional dependencies required beyond Python 3.x, so you can star
 
 ## Usage
 
-Here's a basic example of how to use the `LinearEquationErrorMinimizer` class:
+Here's a basic example of how to use the `LinearEquationIntegerOptimizer` class:
 
 ```python
-from main import LinearEquationErrorMinimizer
+from main import LinearEquationIntegerOptimizer
 
 if __name__ == '__main__':
-    myOpt = LinearEquationErrorMinimizer(L=20.5, a=0.80, b=1.25, show_residuals=False)
+    myOpt = LinearEquationIntegerOptimizer(L=20.5, a=0.80, b=1.25, show_residuals=False)
 ```
 
 This will minimize the error for the equation `20.5 = 0.8*x + 1.25*y` and print the optimized integer values of `x` and `y` with the smallest residual error.
-
-## Parameters
-
-- `L` (float): The target value for the equation `L = a*x + b*y`
-- `a` (float): Coefficient for `x` in the equation
-- `b` (float): Coefficient for `y` in the equation
-- `show_residuals` (bool, optional): Whether to print the residuals (default is False)
 
 
 ## Methods
