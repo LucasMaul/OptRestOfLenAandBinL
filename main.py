@@ -153,9 +153,9 @@ class LinearEquationIntegerOptimizer:
             f"{horizonal_bar}\n"
             f"{result_string}\n"
             f"{horizonal_bar}\n"
-            F"> minmal rest: \033[31m{self._errorPlane(x_sol, y_sol):0.3f}\033[0m\n"
+            F"> minimal error: \033[31m{self._errorPlane(x_sol, y_sol):0.3f}\033[0m\n"
             f"> got minimum out of {len_resi} residuals\n"
-            f"> calculation took {len_time} seconds"
+            f"> optimization took {len_time} sec"
             )
 
 
@@ -182,4 +182,4 @@ class LinearEquationIntegerOptimizer:
 
 
 if __name__ == '__main__':
-    myOpt = LinearEquationIntegerOptimizer(L=1065.5401, a=0.80, b=1.25, show_residuals=False)
+    myOpt = LinearEquationIntegerOptimizer(L=1061105.5701, a=0.80, b=1.25, show_residuals=False)
