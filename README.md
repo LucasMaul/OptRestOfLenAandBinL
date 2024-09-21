@@ -1,6 +1,6 @@
 # Linfit
 
-`Linfit` is a Python class designed to minimize the error `E` in a discrete linear equation of the form `L_i = a * x_i + b * y_i + E_i` by finding **integer** values of `x_i` and `y_i` that yield the closest approximation to `L`. `L`, `a` and `b` are given constant float values. The programm is designed to take almost no memory when calculating and no need of extra packages outside of standard python. First, it dramatically reduces the solution space for finding realistic discrete solution values for `x_i` and `y_i`. Afterwards it walks through the found solution space and undercuts every next result, till no smaller error exists.
+`Linfit` is a Python class designed to minimize the error `E_i` in a discrete linear equation of the form `L_i = a * x_i + b * y_i + E_i` by finding **integer** values of `x_i` and `y_i` that yield the closest approximation to `L`. `L`, `a` and `b` are given constant float values. The programm is designed to take almost no memory when calculating and there is no need of extra packages outside of standard python. First, it dramatically reduces the solution space for finding close discrete solution values for `x_i` and `y_i`. Afterwards it walks through the found solution space and undercuts every next result, till no smaller error exists.
 
 ## Example Output
 
