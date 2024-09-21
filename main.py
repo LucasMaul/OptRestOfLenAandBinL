@@ -1,4 +1,5 @@
 from typing import Generator
+from time import time
 
 class LinearEquationIntegerOptimizer:
     """
@@ -131,18 +132,16 @@ class LinearEquationIntegerOptimizer:
         return x_sol
 
 
-    def _printResult(self, x_sol:int, y_sol:int, len_resi:int) -> None:
+    def _printResult(self, x_sol:int, y_sol:int, len_resi:int, len_time:str) -> None:
 
         result_len = self._a * x_sol + self._b * y_sol
-
-        
 
         result_string = (
             f"\033[32m{x_sol}\033[0m * [{self._a:0.3f}] + "
             f"\033[32m{y_sol}\033[0m * [{self._b:0.3f}] = {result_len:0.3f}"
         )
 
-        horizonal_bar_above_result = "="*len(result_string)
+        horizonal_bar = "="*(len(result_string)-18)
 
         print(
             "==================\n"
@@ -151,10 +150,12 @@ class LinearEquationIntegerOptimizer:
             f"l = {self._L:0.3f}\n"
             f"a = {self._a:0.3f}\n"
             f"b = {self._b:0.3f}\n"
-            f"{horizonal_bar_above_result}\n"
+            f"{horizonal_bar}\n"
             f"{result_string}\n"
-            F"> minmal rest: {self._errorPlane(x_sol, y_sol):0.3f}\n"
-            f"> got minimum out of {len_resi} residuals"
+            f"{horizonal_bar}\n"
+            F"> minmal rest: \033[31m{self._errorPlane(x_sol, y_sol):0.3f}\033[0m\n"
+            f"> got minimum out of {len_resi} residuals\n"
+            f"> calculation took {len_time} seconds"
             )
 
 
@@ -162,10 +163,15 @@ class LinearEquationIntegerOptimizer:
 
         x_range = self._getValidXRange()
         error_generator = self._minimalErrorGenerator(x_range)
-
+        
+        start_time = time()
         x_sol = self._undercutMinError(error_generator)
         y_sol = self._max_y_int(self._y(x_sol))
-        self._printResult(x_sol, y_sol, len(x_range))
+        end_time = time()
+
+        len_time = end_time - start_time
+
+        self._printResult(x_sol, y_sol, len(x_range), len_time)
 
         return x_sol, y_sol
 
@@ -176,4 +182,4 @@ class LinearEquationIntegerOptimizer:
 
 
 if __name__ == '__main__':
-    myOpt = LinearEquationIntegerOptimizer(L=10, a=1.25, b=0.80, show_residuals=False)
+    myOpt = LinearEquationIntegerOptimizer(L=1065.5401, a=0.80, b=1.25, show_residuals=False)
