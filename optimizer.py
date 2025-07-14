@@ -133,8 +133,17 @@ class Linfit:
 
 
     def _undercutMinError(self, error_generator: Generator) -> int:
-        min_error, x_sol = min(error_generator, key=lambda t: t[0])
-        return x_sol
+        min_error = float('inf')
+        best_x_values = []
+
+        for error, x in error_generator:
+            if error < min_error:
+                min_error = error
+                best_x_values = [x]
+            elif error == min_error:
+                best_x_values.append(x)
+        
+        return max(best_x_values)
 
 
     def _printResult(self, x_sol:int, y_sol:int, len_resi:int, len_time:str) -> None:
@@ -144,13 +153,13 @@ class Linfit:
         min_error = self._errorPlane(x_sol, y_sol)
 
         result_string = (
-            f"\033[32m{x_sol}\033[0m * [{self._a:0.3f}] + "
-            f"\033[32m{y_sol}\033[0m * [{self._b:0.3f}] + "
-            f"\033[31m{min_error:0.3f}\033[0m = "
+            f"{x_sol} * [{self._a:0.3f}] + "
+            f"{y_sol} * [{self._b:0.3f}] + "
+            f"{min_error:0.3f} = "
             f"{(result_len+min_error):0.3f}"
         )
 
-        horizonal_bar = "="*(len(result_string)-27)
+        horizonal_bar = "="*len(result_string)
 
         print(
             "==================\n"
@@ -162,7 +171,7 @@ class Linfit:
             f"{horizonal_bar}\n"
             f"{result_string}\n"
             f"{horizonal_bar}\n"
-            F"> target len without error: \033[32m{result_len:0.3f}\033[0m\n"
+            F"> target len without error: {result_len:0.3f}\n"
             f"> got minimum out of {len_resi} residuals\n"
             f"> optimization took {len_time} sec"
             )
